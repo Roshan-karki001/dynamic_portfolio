@@ -1,0 +1,1 @@
+import{l as t,a as s,b as o,c as r,d,e as i,f,g as w,h as e,i as p,j as c,k as m}from"./@tsparticles-BOmqnDVb.js";async function b(a,l=!0){a.checkVersion("3.8.1"),await t(a,!1),await s(a,!1),await o(a,!1),await r(a,!1),await d(a,!1),await i(a,!1),await f(a,!1),await w(a,!1),await e(a,!1),await p(a,!1),await c(a,!1),await m(a,l)}export{b as l};

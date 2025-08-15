@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+    .hvr-grow {
+        transition: transform 0.3s;
+    }
+
+    .hvr-grow:hover {
+        transform: scale(1.5);
+    }
+}
