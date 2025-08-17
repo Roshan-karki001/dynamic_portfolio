@@ -12,8 +12,8 @@ class AdminDatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory()->create([
-            'name' => 'Shubham Shrestha',
-            'email' => 'sthaluffy85@gmail.com',
+            'name' => 'Roshan Karki',
+            'email' => 'Karkiroshan061@gmail.com',
         ]);
     }
 }

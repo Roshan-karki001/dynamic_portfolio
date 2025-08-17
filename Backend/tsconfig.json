@@ -13,6 +13,6 @@
             "@/*": ["./resources/js/*"]
         }
     },
-    "include": ["resources/js/**/*"],
+    "include": ["resources/js/**/*", "../Frontend/src/components/ui"],
     "exclude": ["node_modules"]
 }

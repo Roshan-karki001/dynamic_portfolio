@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import DefaultLayout from "./layout/DefaultLayout";
-// import "./css/style.css";
 import "./css/satoshi.css";
 import "flatpickr/dist/flatpickr.min.css";
 import { useSelector } from "react-redux";
