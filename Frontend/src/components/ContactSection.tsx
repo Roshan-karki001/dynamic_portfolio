@@ -10,19 +10,19 @@ const ContactSection = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "john.doe@student.edu",
-      link: "mailto:john.doe@student.edu"
+      value: "Karkiroshan061@gmail.com",
+      link: "mailto:Roshan.doe@student.edu"
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+1 (555) 123-4567",
+      value: "9843619862",
       link: "tel:+15551234567"
     },
     {
       icon: MapPin,
       title: "Location",
-      value: "New York, NY",
+      value: "Bhaktapur, Nepal",
       link: "#"
     }
   ];
@@ -31,14 +31,14 @@ const ContactSection = () => {
     {
       icon: Github,
       title: "GitHub",
-      value: "@johndoe",
-      link: "https://github.com/johndoe"
+      value: "@Roshan Karki",
+      link: "https://github.com/Roshan Karki"
     },
     {
       icon: Linkedin,
       title: "LinkedIn",
-      value: "John Doe",
-      link: "https://linkedin.com/in/johndoe"
+      value: "Roshan Doe",
+      link: "https://linkedin.com/in/Roshan Karki"
     }
   ];
 
@@ -68,16 +68,16 @@ const ContactSection = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" placeholder="John" />
+                  <Input id="firstName" placeholder="Roshan" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" placeholder="Smith" />
+                  <Input id="lastName" placeholder="Karki" />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="john@example.com" />
+                <Input id="email" type="email" placeholder="Roshan@example.com" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="subject">Subject</Label>

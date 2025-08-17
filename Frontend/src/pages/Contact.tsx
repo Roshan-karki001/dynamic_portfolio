@@ -20,23 +20,22 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "john.doe@student.edu",
+      value: "Karkiroshan061@gmail.com",
       description: "Best for detailed inquiries",
-      link: "mailto:john.doe@student.edu",
+      link: "mailto:Karkiroshan061@gmail.com",
       available: "Usually responds within 24 hours"
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+1 (555) 123-4567",
+      value: "9843619861",
       description: "For urgent matters",
-      link: "tel:+15551234567",
       available: "Available Mon-Fri 9AM-6PM EST"
     },
     {
       icon: MapPin,
       title: "Location",
-      value: "New York, NY",
+      value: "Bhaktapur, Nepal",
       description: "Open to relocation",
       link: "#",
       available: "Available for in-person meetings"
@@ -47,33 +46,31 @@ const Contact = () => {
     {
       icon: Github,
       platform: "GitHub",
-      username: "@johndoe",
-      link: "https://github.com/johndoe",
+      username: "@RoshanKarki",
+      link: "https://github.com/karkiroshan001",
       description: "Check out my code and projects"
     },
     {
       icon: Linkedin,
       platform: "LinkedIn",
-      username: "John Doe",
-      link: "https://linkedin.com/in/johndoe",
+      username: "Roshan Karki",
+      link: "https://linkedin.com/in/RoshanKarki",
       description: "Professional networking and updates"
     },
-    {
-      icon: Twitter,
-      platform: "Twitter",
-      username: "@johndoe_dev",
-      link: "https://twitter.com/johndoe_dev",
-      description: "Tech thoughts and daily updates"
-    }
+    // {
+    //   icon: Twitter,
+    //   platform: "Twitter",
+    //   username: "@johndoe_dev",
+    //   link: "https://twitter.com/johndoe_dev",
+    //   description: "Tech thoughts and daily updates"
+    // }
   ];
 
   const collaborationTypes = [
     { type: "Internships", description: "Seeking summer 2024 opportunities", available: true },
     { type: "Freelance Projects", description: "Web development and mobile apps", available: true },
     { type: "Open Source", description: "Contributing to meaningful projects", available: true },
-    { type: "Study Groups", description: "Academic collaboration", available: true },
-    { type: "Mentoring", description: "Helping junior developers", available: true },
-    { type: "Hackathons", description: "Team formation and participation", available: true }
+   
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

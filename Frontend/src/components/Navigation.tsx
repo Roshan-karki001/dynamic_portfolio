@@ -22,7 +22,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-success to-success-glow bg-clip-text text-transparent">
-            JohnDoe
+            Roshan Karki
           </Link>
 
           {/* Desktop Navigation */}
@@ -53,7 +53,7 @@ const Navigation = () => {
             <SheetContent side="right" className="w-80">
               <SheetHeader>
                 <SheetTitle className="text-left text-2xl font-bold bg-gradient-to-r from-success to-success-glow bg-clip-text text-transparent">
-                  JohnDoe
+                  Roshan Karki
                 </SheetTitle>
               </SheetHeader>
               <div className="mt-8 space-y-4">

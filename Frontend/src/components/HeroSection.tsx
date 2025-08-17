@@ -13,7 +13,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="animate-fade-in">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-            John Doe
+            Roshan Karki
           </h1>
           <div className="text-2xl md:text-3xl text-muted-foreground mb-4">
             IT Student & Future Developer
