@@ -142,6 +142,10 @@ const login = async (req, res) => {
             });
         }
 
+        if (!user.isVerified) {
+            return res.status(403).json({ message: "Please verify your email before logging in." });
+        }
+
         const token = jwt.sign(
             { id: user._id, role: user.role, email: user.G_mail },
             process.env.JWT_SECRET,
@@ -164,7 +168,6 @@ const login = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
-
 // Forgot Password Route
 const forgotPassword = async (req, res) => {
     try {
@@ -257,7 +260,7 @@ module.exports = {
     register,
     login,
     verifyEmail,
-    editProfile,  
+    editProfile,  // Changed from editprofile to editProfile
     forgotPassword,
     changePassword,
     deleteAccount

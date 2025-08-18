@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 
-// User Schema (renamed from userSchema to signupSchema)
+// ===================== user/User Schema =====================
 const userSchema = new mongoose.Schema(
   {
     F_name: { type: String, required: true },
@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema(
     G_mail: { type: String, required: true, unique: true },
     Phonenumber: { type: String, required: true },
     password: { type: String, required: true },
+    location: { type: String, required: true },
+    profilePicture: { type: String, default: null },
     role: { type: String, required: true, enum: ["admin"] },
     isVerified: { type: Boolean, default: false },
     verificationToken: { type: String },
@@ -19,110 +21,95 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const mongoose = require("mongoose");
-
+// ===================== About Schema =====================
 const aboutSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    mystory: { type: String, required: true },
-    education: [
-      {
-        degree: { type: String },
-        school: { type: String },
-        year: { type: String },
-        gpa: { type: String },
-        description: { type: String }
-      }
-    ],
-    hobby: [{ type: String }], 
-    achievements: [{ type: String }],
-    isactive: { type: Boolean, default: true }
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    Mystory: { type: String, required: true },
+    education: [{ type: mongoose.Schema.Types.ObjectId, ref: "Education", required: true }],
+    Achievement: { type: String, required: true },
+    Intrest_Hobbies: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("About", aboutSchema);
+// ===================== Education Schema =====================
+const educationSchema = new mongoose.Schema(
+  {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    degree: { type: String, required: true },
+    School: { type: String, required: true },
+    year: { type: String, required: true },
+    gpa: { type: String, required: true },
+    description: { type: String, required: true },
+    is_active: { type: Boolean, default: true },
+  },
+  { timestamps: true }
+);
 
+// ===================== Skill Schema =====================
+const skillSchema = new mongoose.Schema(
+  {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    title: { type: String, required: true },
+    level: { type: Number, required: true, max: 100 }, // percentage
+    category: { 
+      type: String, 
+      enum: ["Programming Languages", "Frontend Development", "Backend Development", "Cloud & DevOps"],
+      required: true 
+    },
+    Certificate: { type: String },
+    tools_technology: { type: String, required: true },
+    currently_learning: { type: Boolean, default: false },
+  },
+  { timestamps: true }
+);
 
-// Project Schema
-const mongoose = require("mongoose");
-
+// ===================== Project Schema =====================
 const projectSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Signup", required: true }, 
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
-    longDescription: { type: String },
-    image: { type: String }, // emoji or URL
-    tech: [{ type: String }], // array of technologies used
-    category: { type: String }, // web, mobile, ai, etc.
-    status: { type: String, enum: ["completed", "in-progress"] }, // restrict to valid values
-    github: { type: String },
-    demo: { type: String },
-    date: { type: String }, // could use Date, but you're using "2023" or "2024"
-    team: { type: String },
-    highlights: [{ type: String }],
-    isactive: { type: Boolean, default: true },
+    longDescription: { type: String, required: true },
+    image: { type: String, default: null },
+    tech: [{ type: String, required: true }],
+    category: { type: String, enum: ["webapp", "mobile app", "backend", "tools"], required: true },
+    status: { type: String, enum: ["completed", "progress"], default: "progress" },
+    github: { type: String, default: null },
+    Date: { type: Date, required: true },
+    Team: { type: String, required: true },
+    Highlights: [{ type: String, required: true }],
+    is_active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Project", projectSchema);
-
-
-
-
-const contractSchema = new mongoose.Schema(
+// ===================== Contact Schema =====================
+const contactSchema = new mongoose.Schema(
   {
-    projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Signup", required: true }, // Changed from "User" to "Signup"
-    engineerId: { type: mongoose.Schema.Types.ObjectId, ref: "Signup", required: true }, // Changed from "User" to "Signup"
-    clientSignature: { type: String, default: null },
-    engineerSignature: { type: String, default: null },
-    title: { type: String, ref: "Project"  },
-    landArea: { type: Number, ref: "Project" },
-    buildingType: { type: String, ref: "Project"},
-    budget: { type: Number,  ref: "Project" },
-    timeline: { type: String,  ref: "Project"},
-    termsConditions: { type: String, required: true },
-    status: {
-      type: String,
-      ref: "Project",
-      enum: ["pending", "signed", "active", "completed", "cancelled"],
-      default: "pending",
-    },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    socialMedia: [
+      {
+        platform: { type: String, required: true },
+        link: { type: String, required: true }
+      }
+    ]
   },
   { timestamps: true }
 );
 
-// Message Schema
-const messageSchema = new mongoose.Schema(
-  {
-    senderId: { type: mongoose.Schema.Types.ObjectId, ref: "Signup", required: true }, // Changed from "User" to "Signup"
-    receiverId: { type: mongoose.Schema.Types.ObjectId, ref: "Signup", required: true }, // Changed from "User" to "Signup"
-    content: { type: String, required: true },
-  },
-  { timestamps: true }
-);
 
-// Review Schema
-const reviewSchema = new mongoose.Schema(
-  {
-    toUserId: { type: mongoose.Schema.Types.ObjectId, ref: "Signup", required: true }, // Engineer being reviewed
-    fromUserId: { type: mongoose.Schema.Types.ObjectId, ref: "Signup", required: true }, // User giving the review
-    reviewText: { type: String, required: true },
-    rating: { type: Number, min: 1, max: 5, required: true }
-  },
-  { timestamps: true }
-);
 
-// Models
-const Signup = mongoose.model("Signup", signupSchema);  // Changed from User to Signup
+// ===================== Models =====================
+const user = mongoose.model("user", userSchema);
+const About = mongoose.model("About", aboutSchema);
+const Education = mongoose.model("Education", educationSchema);
+const Skill = mongoose.model("Skill", skillSchema);
 const Project = mongoose.model("Project", projectSchema);
-const Contract = mongoose.model("Contract", contractSchema);
-const Message = mongoose.model("Message", messageSchema);
-const Review = mongoose.model("Review", reviewSchema);
+const Contact = mongoose.model("Contact", contactSchema);
 
 
-// Export Models
-module.exports = { userSchema, Project, Contract, Message, Review };
+// ===================== Exports =====================
+module.exports = { 
+  user, About, Education, Skill, Project, Contact};

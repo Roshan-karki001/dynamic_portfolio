@@ -1,1 +1,0 @@
-import{n as s}from"./@mantine-BXTPaQuF.js";const n=o=>{s.show({message:o||"Operation Successful"})},t=o=>{s.show({color:"red",message:o||"Something went wrong! Please try again later."})};export{n as a,t as n};

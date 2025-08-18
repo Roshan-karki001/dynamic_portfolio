@@ -1,1 +1,0 @@
-import{S as t}from"./style-BSfXz38_.js";function n(e){return`${t}/storage/${e}`}const r="/build/assets/default-image-CcfQbjsO.png";function o(e){return e&&typeof e=="string"?n(e):typeof window<"u"&&(e instanceof Blob||e instanceof File)?URL.createObjectURL(e):r}export{o as g};
