@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('testimonials', function (Blueprint $table) {
+        Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('company')->nullable();
-            $table->text('message');
-            $table->string('image')->nullable(); // Client's picture
+            $table->string('icon')->nullable(); // Optional icon for technology
+            $table->enum('category', ['frontend developer','backend developer','programming language','Cloud & DevOps'])->nullable();
+            $table->integer('level')->nullable();
+            $table->text('certification')->nullable(); 
+            $table->text('Tools and technology')->nullable(); 
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('testimonials');
+        Schema::dropIfExists('skills');
     }
 };
