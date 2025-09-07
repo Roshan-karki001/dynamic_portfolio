@@ -6,9 +6,9 @@ const socketIo = require('socket.io');
 const connectDB = require("./config/database");
 const authRoutes = require('./route/auth');
 const projectRoutes = require("./route/project_route");
-const reviewRoutes = require("./route/review_route");
-const contractRoutes=require("./route/contract_route");
-const messageRoutes = require('./route/message_route');
+const skillRoutes = require("./route/skill_route");
+const educationRoutes=require("./route/education_route");
+const aboutRoutes = require('./route/about_route');
 
 
 dotenv.config();
@@ -31,26 +31,28 @@ connectDB();
 // Use auth routes
 app.use('/api/auth', authRoutes);
 app.use("/api/projects", projectRoutes);
-app.use("/api/reviews", reviewRoutes);
-app.use("/api/contracts", contractRoutes)
+app.use("/api/abouts", aboutRoutes);
+app.use("/api/education", educationRoutes);
+app.use("/api/skills", skillRoutes);
+
 // Pass io to message routes
-app.use('/api/messages', messageRoutes(io));
+// app.use('/api/messages', messageRoutes(io));
 
-// Socket.io Connection
-io.on('connection', (socket) => {
-    console.log('A user connected');
+// // Socket.io Connection
+// io.on('connection', (socket) => {
+//     console.log('A user connected');
 
-    // Handle user typing
-    socket.on('typing', (data) => {
-        console.log(`${data.username} is typing...`);
-        socket.broadcast.emit('typing', data);
-    });
+//     // Handle user typing
+//     socket.on('typing', (data) => {
+//         console.log(`${data.username} is typing...`);
+//         socket.broadcast.emit('typing', data);
+//     });
 
-    // Handle user disconnecting
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
-});
+//     // Handle user disconnecting
+//     socket.on('disconnect', () => {
+//         console.log('User disconnected');
+//     });
+// });
 
 // Start server
 const PORT = process.env.PORT || 5000;

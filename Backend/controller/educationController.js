@@ -3,11 +3,8 @@ const { Education } = require("../models/alldatabase");
 // 1. Get all education entries for the logged-in user
 const getAllEducations = async (req, res) => {
   try {
-    if (!req.user?.id) {
-      return res.status(401).json({ success: false, message: "Unauthorized: No user ID found" });
-    }
-
-    const educations = await Education.find({ userId: req.user.id }).sort({ createdAt: -1 });
+   
+    const educations = await Education;
 
     res.status(200).json({
       success: true,

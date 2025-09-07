@@ -4,12 +4,10 @@ const {getAllEducations,
   getEducationById,
   createEducation,
   updateEducation,
-  deleteEducation,} = require("../controllers/educationController");
-const authMiddleware = require("../middleware/auth"); 
+  deleteEducation,} = require("../controller/educationController");
+const { authenticateToken } = require('../midware/authMiddleware');
 
-router.use(authMiddleware); // protect all routes
-
-router.get("/",authenticateToken,getAllEducations);
+router.get("/",getAllEducations);
 router.get("/:id",authenticateToken, getEducationById);
 router.post("/",authenticateToken, createEducation);
 router.put("/:id",authenticateToken, updateEducation);

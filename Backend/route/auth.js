@@ -9,7 +9,7 @@ const {
     changePassword,
     deleteAccount,
     editProfile
-} = require('../controller/authcontroller');
+} = require('../controller/authController');
 
 // Public Routes
 

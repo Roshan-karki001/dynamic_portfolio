@@ -4,17 +4,17 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const { Signup } = require("../models/alldatabase");
+const { User } = require("../models/alldatabase");
 
 const router = express.Router();
 
 // Email Transporter Configuration
 const transporter = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT, 10),
     auth: {
-        user: "2c9980ccc3611f",
-        pass: "92e40b0f4fdd8e"
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
     }
 });
 
@@ -28,7 +28,7 @@ const register = async (req, res) => {
         }
 
         // Fix: Change email to G_mail in the query
-        const existingUser = await Signup.findOne({ G_mail: G_mail });
+        const existingUser = await User.findOne({ G_mail: G_mail });
         if (existingUser) return res.status(400).json({ 
             message: "User already exists",
             details: "This email is already registered"
@@ -45,7 +45,7 @@ const register = async (req, res) => {
         const verificationToken = jwt.sign({ email: G_mail, randomToken }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
         // Create new user with all required fields
-        const newUser = new Signup({
+        const newUser = new User({
             F_name: F_name,        // Changed from F_name to firstName
             L_name: L_name,         // Changed from L_name to lastName
             G_mail: G_mail,           // Changed from G_mail to email
@@ -90,7 +90,7 @@ const verifyEmail = async (req, res) => {
 
         const decoded = jwt.verify(verificationToken, process.env.JWT_SECRET);
         // Changed from G_mail to email to match the token we created during registration
-        const user = await Signup.findOne({ G_mail: decoded.email });
+        const user = await User.findOne({ G_mail: decoded.email });
 
         if (!user) return res.status(400).json({ message: "Invalid or expired token" });
 
@@ -119,7 +119,7 @@ const login = async (req, res) => {
         // Clean up email (remove any extra .com if present)
         const cleanEmail = G_mail.replace(/\.com\.com$/, '.com');
         
-        const user = await Signup.findOne({ G_mail: cleanEmail });
+        const user = await User.findOne({ G_mail: cleanEmail });
         if (!user) {
             return res.status(401).json({ 
                 message: "Invalid credentials",
@@ -172,7 +172,7 @@ const login = async (req, res) => {
 const forgotPassword = async (req, res) => {
     try {
         const { G_mail } = req.body;
-        const user = await Signup.findOne({ G_mail });
+        const user = await User.findOne({ G_mail });
 
         if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -196,7 +196,7 @@ const forgotPassword = async (req, res) => {
 const changePassword = async (req, res) => {
     try {
         const { oldPassword, newPassword } = req.body;
-        const user = await Signup.findById(req.user.id);
+        const user = await User.findById(req.user.id);
 
         if (!user || !await bcrypt.compare(oldPassword, user.password)) {
             return res.status(401).json({ message: "Incorrect current password" });
@@ -213,7 +213,7 @@ const changePassword = async (req, res) => {
 // Delete Account Route
 const deleteAccount = async (req, res) => {
     try {
-        await Signup.findByIdAndDelete(req.user.id);
+        await User.findByIdAndDelete(req.user.id);
         res.status(200).json({ message: "Account deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
@@ -227,7 +227,7 @@ const editProfile = async (req, res) => {
         // Get user ID from the token that was decoded in middleware
         const userId = req.user.id;
 
-        const user = await Signup.findById(userId);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
