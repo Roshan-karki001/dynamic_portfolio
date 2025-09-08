@@ -10,7 +10,6 @@ import Skills from "./pages/Skills";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
@@ -23,7 +22,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           {/* Admin Routes */}
-          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<Login />} />
           
           {/* Public Routes */}
