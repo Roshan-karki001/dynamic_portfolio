@@ -9,7 +9,7 @@ use Filament\Tables\Table;
 
 class EducationRelationManager extends RelationManager
 {
-    protected static string $relationship = 'educations';
+    protected static string $relationship = 'education';
 
     protected static ?string $relatedResource = AboutResource::class;
 

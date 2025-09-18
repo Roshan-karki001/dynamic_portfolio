@@ -13,6 +13,7 @@ use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\DatePicker;
 
 class AboutForm
 {
@@ -21,23 +22,43 @@ class AboutForm
         return $form->schema([
             Section::make('about Details')
                 ->schema([
-                    TextInput::make('story')
+                    Textarea::make('story')
                         ->required()
-                        ->maxLength(255),
-                        
-                    RichEditor::make('description')
-                        ->required()
-                        ->maxLength(1000)
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->maxLength(1000),
 
-                    SpatieTagsInput::make('interests_hobbies')
-                        ->label('Tags')
+                    // SpatieTagsInput::make('achievements')
+                    //     ->label('Achievements')
+                    //     ->placeholder('Add tags (use comma or enter)')
+                    //     ->columnSpanFull()
+                    //     ->afterStateHydrated(fn($component, $state) => $component->state($state ?? []))
+                    //     ->dehydrateStateUsing(fn($state) => $state ?? [])
+                    //     ->dehydrated() ,
+
+                    // SpatieTagsInput::make('interests_hobbies')
+                    //     ->label('interests_hobbies')
+                    //     ->placeholder('Add tags (use comma or enter)')
+                    //     ->columnSpanFull()
+                    //     ->afterStateHydrated(fn($component, $state) => $component->state($state ?? []))
+                    //     ->dehydrateStateUsing(fn($state) => $state ?? [])
+                    //     ->dehydrated() 
+                    SpatieTagsInput::make('achievements')
+                        ->label('Achievements')
                         ->placeholder('Add tags (use comma or enter)')
                         ->columnSpanFull()
                         ->afterStateHydrated(fn($component, $state) => $component->state($state ?? []))
                         ->dehydrateStateUsing(fn($state) => $state ?? [])
-                        ->dehydrated() 
+                        ->dehydrated() // <-- this is crucial
+                        ->default([]),
 
+                    SpatieTagsInput::make('interests_hobbies')
+                        ->label('Interests & Hobbies')
+                        ->placeholder('Add tags (use comma or enter)')
+                        ->columnSpanFull()
+                        ->afterStateHydrated(fn($component, $state) => $component->state($state ?? []))
+                        ->dehydrateStateUsing(fn($state) => $state ?? [])
+                        ->dehydrated() // <-- this is crucial
+                        ->default([]),
                 ])
                 ->columns(2),
 
@@ -48,9 +69,16 @@ class AboutForm
                         ->schema([
                             TextInput::make('degree')->required()->maxLength(255),
                             TextInput::make('university')->required()->maxLength(255),
-                            TextInput::make('start_year')->required(),
-                            TextInput::make('end_year')->required(),
-                            TextInput::make('gpa')->numeric()->maxLength(4),
+                            DatePicker::make('start_year')->required(),
+                            DatePicker::make('end_year')->required(),
+                            TextInput::make('gpa')
+                                ->label('GPA')
+                                ->numeric()
+                                ->required()
+                                ->minValue(0)
+                                ->maxValue(4)
+                                ->step(0.01),
+
                             Textarea::make('short_description'),
                         ])
                         ->label('Education')

@@ -10,7 +10,7 @@ class Education extends Model
 
     // Mass assignable attributes
     protected $fillable = [
-        "abouts_id",
+        "about_id",
         'degree',
         'university',
         "start_year",

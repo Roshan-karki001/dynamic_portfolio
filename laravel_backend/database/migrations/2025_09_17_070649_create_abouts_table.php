@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('story');
-            $table->json('achievements');
-            $table->json('interests_hobbies');
+            $table->longText('story'); 
+            $table->json('achievements')->nullable();
+            $table->json('interests_hobbies')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('about');
+        Schema::dropIfExists('abouts');
     }
 };

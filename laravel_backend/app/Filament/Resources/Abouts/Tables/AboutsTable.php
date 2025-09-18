@@ -16,20 +16,27 @@ class AboutsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->columns([   
+            ->columns([
                 TextColumn::make('story')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('achievements')
                     ->sortable()
                     ->toggleable(),
-                    
+
                 // Optional: Tags column (Spatie Tags)
                 TextColumn::make('interests_hobbies.name')
                     ->label('Tags')
                     ->badge()
                     ->separator(', ')
                     ->toggleable(),
+
+                TextColumn::make('education_count')
+                    ->label('Education Entries')
+                    ->counts('education') 
+                    ->sortable()
+                    ->toggleable(),
+
             ])
             ->filters([
                 //

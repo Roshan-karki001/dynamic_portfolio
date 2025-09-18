@@ -19,4 +19,9 @@ class About extends Model
     {
         return $this->hasMany(Education::class);
     }
+    
+     protected $casts = [
+        'achievements' => 'array',
+        'interests_hobbies' => 'array',
+    ];
 }

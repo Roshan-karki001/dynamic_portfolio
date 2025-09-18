@@ -22,7 +22,7 @@ class AboutResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'about';
+    protected static ?string $recordTitleAttribute = 'About';
 
     public static function form(Schema $schema): Schema
     {
