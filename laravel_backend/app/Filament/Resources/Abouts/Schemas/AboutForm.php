@@ -8,7 +8,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Utilities\Set;
@@ -26,22 +25,7 @@ class AboutForm
                         ->required()
                         ->columnSpanFull()
                         ->maxLength(1000),
-
-                    // SpatieTagsInput::make('achievements')
-                    //     ->label('Achievements')
-                    //     ->placeholder('Add tags (use comma or enter)')
-                    //     ->columnSpanFull()
-                    //     ->afterStateHydrated(fn($component, $state) => $component->state($state ?? []))
-                    //     ->dehydrateStateUsing(fn($state) => $state ?? [])
-                    //     ->dehydrated() ,
-
-                    // SpatieTagsInput::make('interests_hobbies')
-                    //     ->label('interests_hobbies')
-                    //     ->placeholder('Add tags (use comma or enter)')
-                    //     ->columnSpanFull()
-                    //     ->afterStateHydrated(fn($component, $state) => $component->state($state ?? []))
-                    //     ->dehydrateStateUsing(fn($state) => $state ?? [])
-                    //     ->dehydrated() 
+                        
                     SpatieTagsInput::make('achievements')
                         ->label('Achievements')
                         ->placeholder('Add tags (use comma or enter)')
