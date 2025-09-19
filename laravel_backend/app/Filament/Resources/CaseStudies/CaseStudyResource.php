@@ -22,9 +22,11 @@ class CaseStudyResource extends Resource
 {
     protected static ?string $model = CaseStudy::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPresentationChartBar;
 
     protected static ?string $recordTitleAttribute = 'CaseStudy';
+
+    protected static ?int $navigationSort = 7; 
 
     public static function form(Schema $schema): Schema
     {

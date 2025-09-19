@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_form', function (Blueprint $table) {
+        Schema::create('tools', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name')->nullable();
-            $table->string('work_email');
-            $table->string('subject');
-            $table->string('message');
-            $table->text('remarks')->nullable();
-            $table->enum('status', ['attended', 'not attended'])->default('not attended');
+             $table->json('tools')->nullable(); 
+            $table->json('currently_learning')->nullable();
+            // Expecting structure like: [{"title": "GoLang", "description": "Learning concurrency"}]
 
             $table->timestamps();
         });
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_form');
+        Schema::dropIfExists('tools');
     }
 };

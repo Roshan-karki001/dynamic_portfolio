@@ -17,11 +17,6 @@ class EmailFormsTable
     {
         return $table
             ->columns([
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->dateTime('M d, Y ')
-                    ->sortable(),
-
                 TextColumn::make('full_name')
                     ->label('Full Name')
                     ->searchable()
@@ -32,22 +27,16 @@ class EmailFormsTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('service')
+                TextColumn::make('subject')
                     ->sortable(),
 
-                TextColumn::make('budget')
+                TextColumn::make('message')
                     ->sortable(),
-
-                TextColumn::make('heard_from')
-                    ->label('Heard From')
-                    ->sortable()
-                    ->toggleable(),
-
-                TextColumn::make('project_description')
-                    ->label('Project')
-                    ->limit(50)
-                    ->tooltip(fn($record) => $record->project_description)
-                    ->toggleable(),
+                    
+                TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime('M d, Y ')
+                    ->sortable(),
 
                 TextInputColumn::make('remarks')
                     ->label('Remarks')

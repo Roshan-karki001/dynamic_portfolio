@@ -6,6 +6,7 @@ use App\Filament\Resources\EmailForms\Pages\CreateEmailForm;
 use App\Filament\Resources\EmailForms\Pages\EditEmailForm;
 use App\Filament\Resources\EmailForms\Pages\ListEmailForms;
 use App\Filament\Resources\EmailForms\Schemas\EmailFormForm;
+use Filament\Support\Icons\Heroicon;
 use App\Filament\Resources\EmailForms\Tables\EmailFormsTable;
 use App\Models\EmailForm;
 use BackedEnum;
@@ -18,9 +19,11 @@ class EmailFormResource extends Resource
 {
     protected static ?string $model = EmailForm::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Envelope;
 
     protected static ?string $recordTitleAttribute = 'full_name';
+
+    protected static ?int $navigationSort = 6; 
 
     public static function form(Schema $schema): Schema
     {

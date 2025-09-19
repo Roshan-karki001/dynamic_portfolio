@@ -20,20 +20,12 @@ class EmailFormForm
                 ->label('Work Email')
                 ->disabled(),
 
-            TextInput::make('service')
-                ->label('Service')
+            TextInput::make('subject')
+                ->label('Subject')
                 ->disabled(),
 
-            TextInput::make('budget')
-                ->label('Budget')
-                ->disabled(),
-
-            TextInput::make('heard_from')
-                ->label('Heard From')
-                ->disabled(),
-
-            Textarea::make('project_description')
-                ->label('Project Description')
+            TextInput::make('message')
+                ->label('Message')
                 ->disabled(),
 
             // Editable fields (admin can change these)

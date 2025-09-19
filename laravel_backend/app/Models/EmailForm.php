@@ -12,10 +12,8 @@ class EmailForm extends Model
     protected $fillable = [
         'full_name',
         'work_email',
-        "service",
-        "budget",
-        "project_description",
-        "heard_from",
+        "subject",
+        "message",
         "remarks",
         "status",
 

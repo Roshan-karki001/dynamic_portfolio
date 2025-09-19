@@ -21,7 +21,7 @@ class TestimonialsResource extends Resource   // ✅ Match file name
 {
     protected static ?string $model = Testimonials::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
 
     protected static string|UnitEnum|null $navigationGroup = 'Home';
 
@@ -29,7 +29,7 @@ class TestimonialsResource extends Resource   // ✅ Match file name
 
     protected static ?string $slug = 'home/testimonials';
     
-    protected static ?int $navigationSort = 0; 
+    protected static ?int $navigationSort = 2; 
 
     public static function form(Schema $schema): Schema
     {

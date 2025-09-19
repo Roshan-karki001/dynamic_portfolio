@@ -42,11 +42,7 @@ return new class extends Migration
                 'wrench'       // Tools
             ])->default('code-2');
 
-            $table->json('tools')->nullable(); // Stores an array of tools
-
-            $table->json('currently_learning')->nullable();
-            // Expecting structure like: [{"title": "GoLang", "description": "Learning concurrency"}]
-
+           
             $table->timestamps();
         });
     }

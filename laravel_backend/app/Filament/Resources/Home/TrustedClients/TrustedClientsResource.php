@@ -24,13 +24,14 @@ class TrustedClientsResource extends Resource
 
     protected static ?string $model = TrustedClients::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
     protected static ?string $recordTitleAttribute = 'TrustedClients';
 
     protected static string | UnitEnum | null $navigationGroup = 'Home';
 
     protected static ?string $slug = 'home/trustedclients';
+
 
 
     public static function form(Schema $schema): Schema

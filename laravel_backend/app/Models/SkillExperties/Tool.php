@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\SkillExperties;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Skill extends Model
+class Tool extends Model
 {
-   protected $table = 'skills';
+    protected $table = 'tools';
 
     /**
      * The attributes that are mass assignable.
@@ -14,13 +14,9 @@ class Skill extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'skill_name',
-        'skill_icon',
-        'level',
-        'title',
-        'title_icon',
         'tools',
         'currently_learning',
+
     ];
 
     /**
