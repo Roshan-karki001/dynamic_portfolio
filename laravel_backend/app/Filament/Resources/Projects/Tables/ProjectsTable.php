@@ -19,30 +19,55 @@ class ProjectsTable
             ->columns([
                 ImageColumn::make('project_logo')
                     ->label('Project Logo')
-                    -> disk('public')
-                    ->rounded()
-                    ->square()
-                    ->height(50)
-                    ->width(50)
-                    ->toggleable(),
+                    ->disk('public')
+                    ->circular(),
+
                 TextColumn::make('title')
                     ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
+
+                TextColumn::make('tech_used')
+                    ->label('Technologies')
+                    ->badge()
+                    ->formatStateUsing(
+                        fn($state) =>
+                        is_array($state) ? ($state[0] ?? null) : (explode(',', $state)[0] ?? null)
+                    ),
+
                 TextColumn::make('date')
                     ->searchable(),
-                TextColumn::make('done_by'),
-                TextColumn::make('code_link')
-                    ->searchable(),
-                TextColumn::make('demo_link')
-                    ->searchable(),
+
                 TextColumn::make('status'),
+
+                // Toggleable columns (optional)
+                TextColumn::make('slug')
+                    ->searchable()
+                    ->toggleable(),
+
+                TextColumn::make('done_by')
+                    ->toggleable(),
+
+                TextColumn::make('code_link')
+                    ->searchable()
+                    ->toggleable(),
+
+                TextColumn::make('key_highlight')
+                    ->label('Keys')
+                    ->badge()
+                    ->formatStateUsing(
+                        fn($state) =>
+                        is_array($state) ? ($state[0] ?? null) : (explode(',', $state)[0] ?? null)
+                    )
+                    ->toggleable(),
+
                 IconColumn::make('is_active')
-                    ->boolean(),
+                    ->boolean()
+                    ->toggleable(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
