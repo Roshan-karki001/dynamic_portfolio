@@ -19,10 +19,11 @@ class SkillForm
                 TextInput::make('skill_name')
                     ->required(),
                 FileUpload::make('skill_icon')
-                    ->label('skill_icon')
+                    ->label('Skill Icon')
                     ->image()
                     ->disk('public')
                     ->directory('skill_icons')
+                    ->visibility('public') 
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(2024)
                     ->imagePreviewHeight('150'),
@@ -77,11 +78,8 @@ class SkillForm
                         'wrench' => 'Wrench',
                     ])
                     ->default('code-2')
-                    ->disabled(),
-
-
-                
-                
+                    ->disabled()
+                    ->dehydrated(true)
             ]);
     }
 }

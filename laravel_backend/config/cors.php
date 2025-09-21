@@ -5,7 +5,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000'],  // Only React app
+    'allowed_origins' => ['http://localhost:8080'],  // Only React app
 
     'allowed_origins_patterns' => [],
 

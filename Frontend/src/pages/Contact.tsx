@@ -57,13 +57,13 @@ const Contact = () => {
       link: "https://linkedin.com/in/RoshanKarki",
       description: "Professional networking and updates"
     },
-    // {
-    //   icon: Twitter,
-    //   platform: "Twitter",
-    //   username: "@johndoe_dev",
-    //   link: "https://twitter.com/johndoe_dev",
-    //   description: "Tech thoughts and daily updates"
-    // }
+    {
+      icon: Twitter,
+      platform: "Twitter",
+      username: "@johndoe_dev",
+      link: "https://twitter.com/johndoe_dev",
+      description: "Tech thoughts and daily updates"
+    }
   ];
 
   const collaborationTypes = [

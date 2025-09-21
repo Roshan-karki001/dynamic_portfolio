@@ -33,6 +33,14 @@ class Project extends Model
     /**
      * Casts for attributes
      */
+    protected $appends = ['project_logo_path'];
+
+    
+    public function getProjectLogoPathAttribute() 
+    {
+        return $this->project_logo ? asset('storage/' . $this->project_logo) : null;
+    }
+
      protected static function boot()
     {
         parent::boot();

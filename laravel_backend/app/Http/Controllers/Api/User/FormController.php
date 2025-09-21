@@ -15,12 +15,9 @@ class FormController extends Controller
         $validated = $request->validate([
             'full_name'            => 'required|string|max:255',
             'work_email'           => 'required|email|max:255',
-            'service'              => 'required|string|max:255',
-            'budget'               => 'required|string|max:255',
-            'heard_from'           => 'required|string',
-            'project_description'  => 'required|string|max:1000',
+            'subject'              => 'required|string|max:255',
+            'message'               => 'required|string|max:255',
         ]);
-
         // Save the data to the email_form table
         $emailForm = EmailForm::create($validated);
 

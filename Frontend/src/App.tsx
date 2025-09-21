@@ -27,13 +27,12 @@ const App = () => (
           {/* Public Routes */}
           <Route path="/" element={
             <div>
-              <Navigation />
               <Index />
             </div>
           } />
           <Route path="/about" element={
             <div>
-              <Navigation />
+              {/* <Navigation /> */}
               <About />
             </div>
           } />
