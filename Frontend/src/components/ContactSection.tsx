@@ -1,45 +1,86 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, MapPin, Phone, Github, Linkedin } from "lucide-react";
+import { APP_URL } from "@/utils/domain";
 
 const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${APP_URL}/api/email-form`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error("Form submission error:", errorData);
+        alert("Submission failed. Please check your inputs.");
+        return;
+      }
+
+      alert("Message sent successfully!");
+      setFormData({ full_name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      alert("An unexpected error occurred. Please try again later.");
+    }
+  };
+
   const contactInfo = [
     {
       icon: Mail,
       title: "Email",
       value: "Karkiroshan061@gmail.com",
-      link: "mailto:Roshan.doe@student.edu"
+      link: "mailto:Karkiroshan061@gmail.com",
     },
     {
       icon: Phone,
       title: "Phone",
       value: "9843619862",
-      link: "tel:+15551234567"
+      link: "tel:+9779843619862",
     },
-    {
-      icon: MapPin,
-      title: "Location",
-      value: "Bhaktapur, Nepal",
-      link: "#"
-    }
+    { icon: MapPin, title: "Location", value: "Bhaktapur, Nepal", link: "#" },
   ];
 
   const socialLinks = [
     {
       icon: Github,
       title: "GitHub",
-      value: "@Roshan Karki",
-      link: "https://github.com/Roshan Karki"
+      value: "@RoshanKarki",
+      link: "https://github.com/RoshanKarki",
     },
     {
       icon: Linkedin,
       title: "LinkedIn",
-      value: "Roshan Doe",
-      link: "https://linkedin.com/in/Roshan Karki"
-    }
+      value: "Roshan Karki",
+      link: "https://linkedin.com/in/roshan-karki",
+    },
   ];
 
   return (
@@ -50,8 +91,9 @@ const ContactSection = () => {
             Get In Touch
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            I'm always open to discussing new opportunities, interesting projects, 
-            or just having a conversation about technology. Feel free to reach out!
+            I'm always open to discussing new opportunities, interesting
+            projects, or just having a conversation about technology. Feel free
+            to reach out!
           </p>
         </div>
 
@@ -59,90 +101,145 @@ const ContactSection = () => {
           {/* Contact Form */}
           <Card className="border-border/50">
             <CardHeader>
-              <CardTitle className="text-2xl text-primary">Send a Message</CardTitle>
+              <CardTitle className="text-2xl text-primary">
+                Send a Message
+              </CardTitle>
               <CardDescription>
-                Fill out the form below and I'll get back to you as soon as possible.
+                Fill out the form below and I'll get back to you as soon as
+                possible.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit}>
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" placeholder="Roshan" />
+                  <Label htmlFor="Fullname">Full Name</Label>
+                  <Input
+                    id="full_name"
+                    name="full_name"
+                    value={formData.full_name}
+                    onChange={handleInputChange}
+                    placeholder="Your full name"
+                    required
+                  />
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" placeholder="Karki" />
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Roshan@example.com"
+                    required
+                  />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Roshan@example.com" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" placeholder="Project collaboration" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea 
-                  id="message" 
-                  placeholder="Tell me about your project or just say hello!" 
-                  className="min-h-[120px]"
-                />
-              </div>
-              <Button className="w-full">
-                <Mail className="mr-2 h-4 w-4" />
-                Send Message
-              </Button>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    placeholder="Project collaboration"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Tell me about your project or just say hello!"
+                    className="min-h-[120px]"
+                    required
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full flex items-center justify-center"
+                >
+                  <Mail className="mr-2 h-4 w-4" />
+                  Send Message
+                </Button>
+              </form>
             </CardContent>
           </Card>
 
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-semibold mb-6 text-primary">Contact Information</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-primary">
+                Contact Information
+              </h3>
               <div className="space-y-4">
                 {contactInfo.map((item, index) => (
-                  <div key={index} className="flex items-center space-x-4 p-4 bg-card/50 rounded-lg border border-border/50 hover:border-primary/50 transition-colors">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <item.icon className="h-6 w-6 text-primary" />
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="flex items-center space-x-4 p-4 bg-card/50 rounded-lg border border-border/50 hover:border-primary/50 transition-colors">
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <item.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <div className="font-medium">{item.title}</div>
+                        <div className="text-muted-foreground">
+                          {item.value}
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-medium">{item.title}</div>
-                      <div className="text-muted-foreground">{item.value}</div>
-                    </div>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-2xl font-semibold mb-6 text-primary">Follow Me</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-primary">
+                Follow Me
+              </h3>
               <div className="space-y-4">
                 {socialLinks.map((item, index) => (
-                  <div key={index} className="flex items-center space-x-4 p-4 bg-card/50 rounded-lg border border-border/50 hover:border-primary/50 transition-colors">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <item.icon className="h-6 w-6 text-primary" />
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="flex items-center space-x-4 p-4 bg-card/50 rounded-lg border border-border/50 hover:border-primary/50 transition-colors">
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <item.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <div className="font-medium">{item.title}</div>
+                        <div className="text-muted-foreground">
+                          {item.value}
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-medium">{item.title}</div>
-                      <div className="text-muted-foreground">{item.value}</div>
-                    </div>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
 
             <div className="p-6 bg-primary/5 rounded-lg border border-primary/20">
-              <h4 className="font-semibold mb-2 text-primary">Looking for opportunities?</h4>
+              <h4 className="font-semibold mb-2 text-primary">
+                Looking for opportunities?
+              </h4>
               <p className="text-muted-foreground mb-4">
-                I'm currently seeking internship opportunities and entry-level positions 
-                in software development, web development, or IT support roles.
+                I'm currently seeking internship opportunities and entry-level
+                positions in software development, web development, or IT
+                support roles.
               </p>
-              <Button variant="outline">
-                Download Resume
-              </Button>
+              <Button variant="outline">Download Resume</Button>
             </div>
           </div>
         </div>

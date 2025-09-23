@@ -1,50 +1,84 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Code, Database, Cloud, Monitor, Server, Wrench } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { APP_URL } from "@/utils/domain";
+
+// Fetch skills and tools from backend
+const fetchSkills = async () => {
+  const res = await fetch(`${APP_URL}/api/skill_experties`);
+  if (!res.ok) throw new Error("Failed to fetch skills data");
+  return res.json();
+};
+
+// Map backend title_icon to Lucide icons
+const titleIconMap = {
+  monitor: Monitor,
+  server: Server,
+  "code-2": Code,
+  database: Database,
+  cloud: Cloud,
+  wrench: Wrench,
+};
+
+// Map skill levels to numeric values for progress bar
+const levelMap = {
+  beginner: 10,
+  junior_developer: 30,
+  intermediate: 50,
+  advanced: 70,
+  proficient: 85,
+  expert: 100,
+};
 
 const SkillsSection = () => {
-  const skillCategories = [
-    {
-      title: "Programming Languages",
-      skills: [
-        { name: "JavaScript", level: 85 },
-        { name: "Python", level: 80 },
-        { name: "Java", level: 75 },
-        { name: "C++", level: 70 },
-        { name: "TypeScript", level: 75 }
-      ]
-    },
-    {
-      title: "Web Technologies",
-      skills: [
-        { name: "React", level: 80 },
-        { name: "Node.js", level: 75 },
-        { name: "HTML/CSS", level: 90 },
-        { name: "MongoDB", level: 70 },
-        { name: "PostgreSQL", level: 65 }
-      ]
-    },
-    {
-      title: "Tools & Platforms",
-      skills: [
-        { name: "Git", level: 85 },
-        { name: "Docker", level: 60 },
-        { name: "AWS", level: 55 },
-        { name: "Linux", level: 70 },
-        { name: "VS Code", level: 95 }
-      ]
-    }
-  ];
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["skills"],
+    queryFn: fetchSkills,
+  });
 
-  const technologies = [
-    "React", "Node.js", "Python", "JavaScript", "TypeScript", "MongoDB", 
-    "PostgreSQL", "Docker", "Git", "AWS", "Linux", "Java", "C++", 
-    "Express.js", "Tailwind CSS", "Firebase", "REST APIs", "GraphQL"
-  ];
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Loading...
+      </div>
+    );
+  if (isError)
+    return (
+      <div className="flex items-center justify-center h-screen text-red-500">
+        Error fetching data
+      </div>
+    );
+
+  const skills = data?.data?.skills || [];
+  const toolsData = data?.data?.tools?.[0] || { tools: [], currently_learning: [] };
+
+  // Map skill data for progress bar and display
+  const mappedSkills = skills.map(s => ({
+    name: s.skill_name,
+    level: levelMap[s.level] || 0,
+    title: s.title,
+    icon: titleIconMap[s.title_icon],
+    skill_icon_path: s.skill_icon_path,
+  }));
+
+  // Group skills by title/category
+  const groupedSkills = mappedSkills.reduce((acc, skill) => {
+    if (!acc[skill.title]) acc[skill.title] = [];
+    acc[skill.title].push(skill);
+    return acc;
+  }, {});
+
+  const skillCategories = Object.keys(groupedSkills).map(title => ({
+    title,
+    skills: groupedSkills[title],
+  }));
 
   return (
     <section className="py-20">
       <div className="container mx-auto px-6">
+        {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
             Skills & Technologies
@@ -55,6 +89,7 @@ const SkillsSection = () => {
           </p>
         </div>
 
+        {/* Skill Cards */}
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {skillCategories.map((category, index) => (
             <Card key={index} className="border-border/50 hover:border-primary/50 transition-all duration-300">
@@ -78,10 +113,11 @@ const SkillsSection = () => {
           ))}
         </div>
 
+        {/* Tools Badges */}
         <div className="text-center">
           <h3 className="text-2xl font-semibold mb-8 text-primary">Technology Stack</h3>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            {technologies.map((tech, index) => (
+            {toolsData.tools.map((tech, index) => (
               <Badge 
                 key={index} 
                 variant="secondary" 

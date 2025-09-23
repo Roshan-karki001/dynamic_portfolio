@@ -7,13 +7,15 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Mail, MapPin, Phone, Github, Linkedin, Twitter, Send, Calendar } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import { useQuery } from "@tanstack/react-query";
+import { APP_URL } from "@/utils/domain";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    full_name: "",
+    work_email: "",
     subject: "",
-    message: ""
+    message: "",
   });
 
   const contactMethods = [
@@ -23,14 +25,14 @@ const Contact = () => {
       value: "Karkiroshan061@gmail.com",
       description: "Best for detailed inquiries",
       link: "mailto:Karkiroshan061@gmail.com",
-      available: "Usually responds within 24 hours"
+      available: "Usually responds within 24 hours",
     },
     {
       icon: Phone,
       title: "Phone",
       value: "9843619861",
       description: "For urgent matters",
-      available: "Available Mon-Fri 9AM-6PM EST"
+      available: "Available Mon-Fri 9AM-6PM EST",
     },
     {
       icon: MapPin,
@@ -38,8 +40,8 @@ const Contact = () => {
       value: "Bhaktapur, Nepal",
       description: "Open to relocation",
       link: "#",
-      available: "Available for in-person meetings"
-    }
+      available: "Available for in-person meetings",
+    },
   ];
 
   const socialLinks = [
@@ -48,48 +50,73 @@ const Contact = () => {
       platform: "GitHub",
       username: "@RoshanKarki",
       link: "https://github.com/karkiroshan001",
-      description: "Check out my code and projects"
+      description: "Check out my code and projects",
     },
     {
       icon: Linkedin,
       platform: "LinkedIn",
       username: "Roshan Karki",
       link: "https://linkedin.com/in/RoshanKarki",
-      description: "Professional networking and updates"
+      description: "Professional networking and updates",
     },
     {
       icon: Twitter,
       platform: "Twitter",
       username: "@johndoe_dev",
       link: "https://twitter.com/johndoe_dev",
-      description: "Tech thoughts and daily updates"
-    }
+      description: "Tech thoughts and daily updates",
+    },
   ];
 
   const collaborationTypes = [
     { type: "Internships", description: "Seeking summer 2024 opportunities", available: true },
     { type: "Freelance Projects", description: "Web development and mobile apps", available: true },
     { type: "Open Source", description: "Contributing to meaningful projects", available: true },
-   
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    try {
+      const res = await fetch(`${APP_URL}/api/email-form`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error("Form submission error:", errorData);
+        alert("Submission failed. Please check your inputs.");
+        return;
+      }
+
+      alert("Message sent successfully!");
+
+      setFormData({
+        full_name: "",
+        work_email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      alert("An unexpected error occurred. Please try again later.");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       <Navigation />
-      
+
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-6">
           {/* Header */}
@@ -98,7 +125,7 @@ const Contact = () => {
               Let's Connect
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              I'm always excited to discuss new opportunities, collaborate on interesting projects, 
+              I'm always excited to discuss new opportunities, collaborate on interesting projects,
               or simply chat about technology and innovation. Don't hesitate to reach out!
             </p>
           </div>
@@ -120,30 +147,30 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="name">Full Name *</Label>
+                        <Label htmlFor="full_name">Full Name *</Label>
                         <Input
-                          id="name"
-                          name="name"
-                          value={formData.name}
+                          id="full_name"
+                          name="full_name"
+                          value={formData.full_name}
                           onChange={handleInputChange}
                           placeholder="Your full name"
                           required
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="email">Email Address *</Label>
+                        <Label htmlFor="work_email">Email Address *</Label>
                         <Input
-                          id="email"
-                          name="email"
+                          id="work_email"
+                          name="work_email"
                           type="email"
-                          value={formData.email}
+                          value={formData.work_email}
                           onChange={handleInputChange}
                           placeholder="your.email@example.com"
                           required
                         />
                       </div>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="subject">Subject *</Label>
                       <Input
@@ -155,7 +182,7 @@ const Contact = () => {
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="message">Message *</Label>
                       <Textarea
@@ -168,7 +195,7 @@ const Contact = () => {
                         required
                       />
                     </div>
-                    
+
                     <Button type="submit" className="w-full bg-success hover:bg-success/90 text-success-foreground">
                       <Send className="mr-2 h-4 w-4" />
                       Send Message
@@ -248,10 +275,11 @@ const Contact = () => {
                           <div className="font-medium text-sm">{collab.type}</div>
                           <div className="text-xs text-muted-foreground">{collab.description}</div>
                         </div>
-                        <Badge 
-                          className={collab.available 
-                            ? "bg-success/20 text-success border-success/30" 
-                            : "bg-muted text-muted-foreground"
+                        <Badge
+                          className={
+                            collab.available
+                              ? "bg-success/20 text-success border-success/30"
+                              : "bg-muted text-muted-foreground"
                           }
                         >
                           {collab.available ? "Available" : "Busy"}
