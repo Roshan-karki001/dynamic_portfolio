@@ -19,7 +19,9 @@ class AboutsTable
             ->columns([
                 TextColumn::make('story')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->limit(10),
+                    
                 TextColumn::make('achievements')
                     ->sortable()
                     ->toggleable(),
